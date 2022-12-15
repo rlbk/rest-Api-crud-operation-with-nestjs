@@ -1,10 +1,16 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer } from '@nestjs/common/interfaces/middleware/middleware-consumer.interface';
+
 import { BookController } from './book.controller';
-import { BookService } from './book.service';
+import { BookMiddleware } from './book.middleware';
 
 @Module({
   imports: [],
   controllers: [BookController],
-  providers: [BookService]
+  providers: []
 })
-export class BookModule {}
+export class BookModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(BookMiddleware).forRoutes('book');
+  }
+}
