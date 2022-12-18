@@ -4,10 +4,11 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Body
+  Body,
+  ValidationPipe
 } from '@nestjs/common';
 import { BookDto } from './dto/book.dto';
-import { BookPipe } from './pipes/book.pipe';
+// import { BookPipe } from './pipes/book.pipe';
 
 @Controller('book')
 export class BookController {
@@ -22,8 +23,14 @@ export class BookController {
   //   }
 
   //using custom pipe
+  // @Post('/add')
+  // addBook(@Body(new BookPipe()) book: BookDto): string {
+  //   return 'This willl add book';
+  // }
+
+  //using built in validation pipe
   @Post('/add')
-  addBook(@Body(new BookPipe()) book: BookDto): string {
+  addBook(@Body(new ValidationPipe()) book: BookDto): string {
     return 'This willl add book';
   }
 }
